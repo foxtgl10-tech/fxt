@@ -10,6 +10,16 @@
   --dark-color: #000;
 }
 
+body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--dark-color);
+  overflow: hidden;
+  perspective: 1000px;
+}
+
 .title {
   position: absolute;
   width: 100%;
@@ -23,16 +33,6 @@
   text-shadow: 0px 0px 20px white;
 }
 
-body {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: var(--dark-color);
-  overflow: hidden;
-  perspective: 1000px;
-}
-
 .night {
   position: fixed;
   left: 50%;
@@ -40,8 +40,7 @@ body {
   transform: translateX(-50%);
   width: 100%;
   height: 100%;
-  filter: blur(0.1vmin);
-  background-image: radial-gradient(ellipse at top, transparent 0%, var(--dark-color)), radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.2)), repeating-linear-gradient(220deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), repeating-linear-gradient(189deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), repeating-linear-gradient(148deg, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 19px, transparent 19px, transparent 22px), linear-gradient(90deg, rgb(255, 255, 250), rgb(240, 240, 240));
+  background: radial-gradient(circle at top, #111, #000);
 }
 
 .flowers {
@@ -54,61 +53,92 @@ body {
   bottom: 10vmin;
   transform-origin: bottom center;
   z-index: 10;
-  --fl-speed: 0.8s;
 }
 
-.flower--1 {
-  animation: moving-flower-1 4s linear infinite;
+.flower__leafs {
+  position: relative;
 }
 
-.flower--1 .flower__line {
-  height: 70vmin;
-  animation-delay: 0.3s;
-}
-
-.flower--1 .flower__line__leaf--1 {
-  animation: blooming-leaf-right var(--fl-speed) 1.6s backwards;
-}
-
-.flower--1 .flower__line__leaf--2 {
-  animation: blooming-leaf-right var(--fl-speed) 1.4s backwards;
-}
-
-.flower--1 .flower__line__leaf--3 {
-  animation: blooming-leaf-left var(--fl-speed) 1.2s backwards;
-}
-
-.flower--1 .flower__line__leaf--4 {
-  animation: blooming-leaf-left var(--fl-speed) 1s backwards;
-}
-
-.flower--1 .flower__line__leaf--5 {
-  animation: blooming-leaf-right var(--fl-speed) 1.8s backwards;
-}
-
-.flower--1 .flower__line__leaf--6 {
-  animation: blooming-leaf-left var(--fl-speed) 2s backwards;
-}
-
-.flower--2 {
+.flower__leaf {
+  position: absolute;
+  bottom: 0;
   left: 50%;
-  transform: rotate(20deg);
-  animation: moving-flower-2 4s linear infinite;
+  width: 8vmin;
+  height: 11vmin;
+  border-radius: 50% 50% 60% 60%;
+  transform-origin: bottom center;
+  opacity: 0.95;
+
+  background: radial-gradient(circle at 30% 30%, #ffd1e8, #ff69b4 70%),
+              linear-gradient(to top, #ff1493, #ff69b4);
+
+  box-shadow:
+    inset 0 0 15px rgba(255, 255, 255, 0.7),
+    inset -10px -10px 25px rgba(255, 20, 147, 0.8),
+    0 0 25px rgba(255, 105, 180, 0.9);
 }
 
-.flower--2 .flower__line {
+.flower__leaf--1 { transform: translate(-10%, 1%) rotateY(40deg) rotateX(-50deg); }
+.flower__leaf--2 { transform: translate(-50%, -4%) rotateX(40deg); }
+.flower__leaf--3 { transform: translate(-90%, 0%) rotateY(45deg) rotateX(50deg); }
+.flower__leaf--4 {
+  width: 8vmin;
+  height: 8vmin;
+  transform: translate(0%, 18%) rotateX(70deg) rotate(-43deg);
+}
+
+.flower__white-circle {
+  position: absolute;
+  left: -3.5vmin;
+  top: -3vmin;
+  width: 9vmin;
+  height: 4vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffacd, #ffcc00, #ff9900);
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.9);
+}
+.flower__line {
   height: 60vmin;
-  animation-delay: 0.6s;
+  width: 1.5vmin;
+  background: linear-gradient(to top, #0a5f2a, #1aaa15);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.flower__leafs::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -100%);
+  width: 10vmin;
+  height: 10vmin;
+  background-color: #ff69b4;
+  filter: blur(18vmin);
+}
+.flower__light {
+  position: absolute;
+  bottom: 0vmin;
+  width: 1vmin;
+  height: 1vmin;
+  background-color: #ff69b4;
+  border-radius: 50%;
+  filter: blur(0.2vmin);
+  animation: light-ans 4s linear infinite;
 }
 
-.flower--2 .flower__line__leaf--1 {
-  animation: blooming-leaf-right var(--fl-speed) 1.9s backwards;
+@keyframes light-ans {
+  0% { opacity: 0; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-20vmin); }
+  100% { opacity: 0; transform: translateY(-40vmin); }
 }
 
-.flower--2 .flower__line__leaf--2 {
-  animation: blooming-leaf-right var(--fl-speed) 1.7s backwards;
+@keyframes moving-flower {
+  0%,100% { transform: rotate(2deg); }
+  50% { transform: rotate(-2deg); }
 }
 
+.flower {
+  animation: moving-flower 4s infinite linear;
+}
 .flower--2 .flower__line__leaf--3 {
   animation: blooming-leaf-left var(--fl-speed) 1.5s backwards;
 }
@@ -1215,3 +1245,4 @@ body {
 
 
 /*# sourceMappingURL=style.css.map */
+
