@@ -306,7 +306,7 @@ body {
 }
 
 .flower__light:nth-child(odd) {
-  background-color: #fff;
+  background-color: #ff69b4;
 }
 
 .flower__light--1 {
@@ -1212,5 +1212,6 @@ body {
 .not-loaded * {
   animation-play-state: paused !important;
 }
+
 
 /*# sourceMappingURL=style.css.map */
